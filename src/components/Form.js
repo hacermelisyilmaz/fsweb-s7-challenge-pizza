@@ -54,6 +54,8 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
     event.preventDefault();
     addOrders(formInputs);
     setFormInputs(emptyForm);
+    setCounter(1);
+    setCheckedItems([]);
   };
 
   const clickHandler = (event) => {
@@ -84,6 +86,7 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
               name="size"
               value="S"
               onChange={changeHandler}
+              checked={formInputs.size === "S"}
             />
             Küçük
           </label>
@@ -93,6 +96,7 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
               name="size"
               value="M"
               onChange={changeHandler}
+              checked={formInputs.size === "M"}
             />
             Orta
           </label>
@@ -102,6 +106,7 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
               name="size"
               value="L"
               onChange={changeHandler}
+              checked={formInputs.size === "L"}
             />
             Büyük
           </label>
@@ -118,8 +123,12 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
             <option disabled value="">
               Hamur Kalınlığı
             </option>
-            <option value="thin">İnce</option>
-            <option value="thick">Kalın</option>
+            <option value="thin" checked={!!formInputs.thickness}>
+              İnce
+            </option>
+            <option value="thick" checked={!!formInputs.thickness}>
+              Kalın
+            </option>
           </select>
         </label>
 
@@ -132,8 +141,8 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
                 <input
                   type="checkbox"
                   name={topping.name}
-                  value={formInputs[topping.name]}
                   onChange={changeHandler}
+                  value={formInputs[topping.name]}
                   disabled={
                     checkedItems.length >= 10 && !formInputs[topping.name]
                   }
@@ -151,6 +160,7 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
             name="note"
             placeholder="Siparişine eklemek istediğin bir not var mı?"
             onChange={changeHandler}
+            value={formInputs.note}
           />
         </div>
       </div>
@@ -166,7 +176,8 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
             name="name"
             placeholder="Ad Soyad"
             onChange={changeHandler}
-          ></input>
+            value={formInputs.name}
+          />
         </label>
 
         <label>
@@ -174,9 +185,10 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
           <input
             id="phone-input"
             name="phone"
-            placeholder="(5xx)-xxx-xxxx"
+            placeholder="5xxxxxxxxx"
             onChange={changeHandler}
-          ></input>
+            value={formInputs.phone}
+          />
         </label>
 
         <label>
@@ -186,7 +198,8 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
             name="address"
             placeholder="Adres"
             onChange={changeHandler}
-          ></input>
+            value={formInputs.address}
+          />
         </label>
 
         <div id="bill-type">
@@ -197,6 +210,7 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
               name="bill"
               value="home"
               onChange={changeHandler}
+              checked={formInputs.bill}
             />
             Bireysel
           </label>
@@ -206,6 +220,7 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
               name="bill"
               value="company"
               onChange={changeHandler}
+              checked={formInputs.name}
             />
             Kurumsal
           </label>
