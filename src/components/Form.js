@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const Home = ({ priceOfPizza, priceOfTopping }) => {
+const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
   const emptyForm = {
     size: "",
     thickness: "",
@@ -36,6 +36,7 @@ const Home = ({ priceOfPizza, priceOfTopping }) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
+    addOrders(formInputs);
     setFormInputs(emptyForm);
   };
 

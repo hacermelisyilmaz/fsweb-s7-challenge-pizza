@@ -3,8 +3,14 @@ import Form from "./Form.js";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const OrderPage = () => {
+  const ordersList = [];
+
   const priceOfPizza = 85.5;
   const priceOfTopping = 5;
+
+  const addOrders = function (order) {
+    ordersList.push(order);
+  };
 
   return (
     <div>
@@ -33,7 +39,11 @@ const OrderPage = () => {
         yemektir. . Küçük bir pizzaya bazen pizzetta denir.
       </p>
 
-      <Form priceOfPizza={priceOfPizza} priceOfTopping={priceOfTopping} />
+      <Form
+        priceOfPizza={priceOfPizza}
+        priceOfTopping={priceOfTopping}
+        addOrders={addOrders}
+      />
     </div>
   );
 };
