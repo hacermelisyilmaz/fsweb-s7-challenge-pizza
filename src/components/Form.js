@@ -11,7 +11,7 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
     { name: "misir", label: "Mısır" },
     { name: "sucuk", label: "Sucuk" },
     { name: "jalepeno", label: "Jalepeno" },
-    { name: "sarımsak", label: "Sarımsak" },
+    { name: "sarimsak", label: "Sarımsak" },
     { name: "biber", label: "Biber" },
     { name: "ananas", label: "Ananas" },
     { name: "kabak", label: "Kabak" },
@@ -41,12 +41,13 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
 
   const [formInputs, setFormInputs] = useState(emptyForm);
   const [counter, setCounter] = useState(1);
-  const [checkedItems, setCheckedItems] = useState(0);
+  const [checkedItems, setCheckedItems] = useState([]);
 
   const changeHandler = (event) => {
     const { name, value, type, checked } = event.target;
-    const input = type === "checkbox" ? checked : value;
-    setFormInputs({ ...formInputs, [name]: input });
+    if (type === "checkbox") {
+      setFormInputs({ ...formInputs, [name]: checked });
+    } else setFormInputs({ ...formInputs, [name]: value });
   };
 
   const submitHandler = (event) => {
@@ -66,8 +67,8 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
 
   useEffect(() => {
     const selectedToppings = [];
-    for (let topping in formInputs) {
-      formInputs[topping] === true && selectedToppings.push(topping);
+    for (let name in formInputs) {
+      formInputs[name] === true && selectedToppings.push(name);
     }
     setCheckedItems(selectedToppings);
   }, [formInputs]);
@@ -133,6 +134,9 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
                   name={topping.name}
                   value={formInputs[topping.name]}
                   onChange={changeHandler}
+                  disabled={
+                    checkedItems.length >= 10 && !formInputs[topping.name]
+                  }
                 />
                 {topping.label}
               </label>
