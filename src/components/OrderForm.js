@@ -26,6 +26,10 @@ const OrderForm = () => {
   });
   const [counter, setCounter] = useState(1);
   const [checkedItems, setCheckedItems] = useState(0);
+  const [additionalPrice, setAdditionalPrice] = useState(0);
+
+  const priceOfPizza = 85.5;
+  const priceOfTopping = 5;
 
   const changeHandler = (event) => {
     const { name, value, type, checked } = event.target;
@@ -33,8 +37,22 @@ const OrderForm = () => {
     setFormInputs({ ...formInputs, [name]: input });
   };
 
+  const clickHandler = (event) => {
+    event.preventDefault();
+    const { name } = event.target;
+    if (name === "increment") setCounter(counter + 1);
+    else if (name === "decrement") {
+      counter > 1 ? setCounter(counter - 1) : setCounter(1);
+    }
+  };
+
   useEffect(() => {
-    setCheckedItems(Object.values(formInputs).filter((v) => v === true).length);
+    const selectedToppings = [];
+    for (let topping in formInputs) {
+      formInputs[topping] === true && selectedToppings.push(topping);
+    }
+    setCheckedItems(selectedToppings);
+    setAdditionalPrice(selectedToppings.length * priceOfTopping);
   }, [formInputs]);
 
   return (
@@ -50,7 +68,7 @@ const OrderForm = () => {
       </header>
 
       <h2 id="pizza-name">Position Absolute Acı Pizza</h2>
-      <div id="pizza-price">85.50₺</div>
+      <div id="pizza-price">{priceOfPizza.toFixed(2)}₺</div>
       <div id="pizza-rating">
         <p id="pizza-rating-score">4.9</p>
         <p id="pizza-rating-number">(200)</p>
@@ -115,7 +133,7 @@ const OrderForm = () => {
 
           <div id="topping-checklist">
             <h3>Ek Malzemeler</h3>
-            <p>En fazla 10 malzeme seçebilirsiniz. 5₺</p>
+            <p>En fazla 10 malzeme seçebilirsiniz. {priceOfTopping}₺</p>
             <label>
               <input
                 type="checkbox"
@@ -246,25 +264,31 @@ const OrderForm = () => {
 
         <div id="order-summary">
           <div id="counter">
-            <button className="decrement">-</button>
+            <button id="decrement" name="decrement" onClick={clickHandler}>
+              -
+            </button>
             {counter}
-            <button className="increment">+</button>
+            <button id="increment" name="increment" onClick={clickHandler}>
+              +
+            </button>
           </div>
+
           <div id="total-sum">
             <h2>Sipariş Toplamı</h2>
             <div id="topping-price">
               <p>Seçimler</p>
-              <p>Seçimler</p>
+              <p>{additionalPrice.toFixed(2)}₺</p>
             </div>
             <div id="total-price">
               <p>Toplam</p>
-              <p>Seçimler</p>
+              <p>{(priceOfPizza + additionalPrice).toFixed(2)}₺</p>
             </div>
+            <button id="order-button">Sipariş Ver</button>
           </div>
         </div>
-        <button id="order-button">Sipariş Ver</button>
       </form>
     </div>
   );
 };
+
 export default OrderForm;
