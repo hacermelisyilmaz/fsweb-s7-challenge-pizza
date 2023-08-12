@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const OrderForm = () => {
@@ -32,6 +32,10 @@ const OrderForm = () => {
     const input = type === "checkbox" ? checked : value;
     setFormInputs({ ...formInputs, [name]: input });
   };
+
+  useEffect(() => {
+    setCheckedItems(Object.values(formInputs).filter((v) => v === true).length);
+  }, [formInputs]);
 
   return (
     <div>
