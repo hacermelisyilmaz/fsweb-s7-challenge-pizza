@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./components/Home.js";
 import OrderPage from "./components/OrderPage.js";
 import Confirmed from "./components/Confirmed.js";
+import "./App.css";
 
 const App = () => {
   return (
