@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <div>
       <h2>KOD ACIKTIRIR</h2>
-      <h2>PIZZA, DOYURUR</h2>
+      <h2>PİZZA, DOYURUR</h2>
       <button id="order-pizza">
         <Link to="/pizza">ACIKTIM</Link>
       </button>
