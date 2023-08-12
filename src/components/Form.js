@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
 
 const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
-  const toppings = {
-    pepperoni: "Pepperoni",
-    sosis: "Sosis",
-    jambon: "Kanada Jambonu",
-    tavuk: "Tavuk Izgara",
-    sogan: "Soğan",
-    domates: "Domates",
-    misir: "Mısır",
-    sucuk: "Sucuk",
-    jalepeno: "Jalepeno",
-    sarımsak: "Sarımsak",
-    biber: "Biber",
-    ananas: "Ananas",
-    kabak: "Kabak",
-  };
+  const toppings = [
+    { name: "pepperoni", label: "Pepperoni" },
+    { name: "sosis", label: "Sosis" },
+    { name: "jambon", label: "Kanada Jambonu" },
+    { name: "tavuk", label: "Tavuk Izgara" },
+    { name: "sogan", label: "Soğan" },
+    { name: "domates", label: "Domates" },
+    { name: "misir", label: "Mısır" },
+    { name: "sucuk", label: "Sucuk" },
+    { name: "jalepeno", label: "Jalepeno" },
+    { name: "sarımsak", label: "Sarımsak" },
+    { name: "biber", label: "Biber" },
+    { name: "ananas", label: "Ananas" },
+    { name: "kabak", label: "Kabak" },
+  ];
   const emptyForm = {
     size: "",
     thickness: "",
@@ -125,124 +125,19 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
         <div id="topping-checklist">
           <h3>Ek Malzemeler</h3>
           <p>En fazla 10 malzeme seçebilirsiniz. {priceOfTopping}₺</p>
-
-          <label>
-            <input
-              type="checkbox"
-              name="pepperoni"
-              value={formInputs.pepperoni}
-              onChange={changeHandler}
-            />
-            Pepperoni
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              name="sosis"
-              value={formInputs.sosis}
-              onChange={changeHandler}
-            />
-            Sosis
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              name="jambon"
-              value={formInputs.jambon}
-              onChange={changeHandler}
-            />
-            Kanada Jambonu
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              name="tavuk"
-              value={formInputs.tavuk}
-              onChange={changeHandler}
-            />
-            Tavuk Izgara
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              name="sogan"
-              value={formInputs.sogan}
-              onChange={changeHandler}
-            />
-            Soğan
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              name="domates"
-              value={formInputs.domates}
-              onChange={changeHandler}
-            />
-            Domates
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              name="misir"
-              value={formInputs.sosis}
-              onChange={changeHandler}
-            />
-            Mısır
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              name="sucuk"
-              value={formInputs.sosis}
-              onChange={changeHandler}
-            />
-            Sucuk
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              name="jalepeno"
-              value={formInputs.sosis}
-              onChange={changeHandler}
-            />
-            Jalepeno
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              name="sarimsak"
-              value={formInputs.sosis}
-              onChange={changeHandler}
-            />
-            Sarımsak
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              name="biber"
-              value={formInputs.sosis}
-              onChange={changeHandler}
-            />
-            Biber
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              name="ananas"
-              value={formInputs.sosis}
-              onChange={changeHandler}
-            />
-            Ananas
-          </label>
-          <label>
-            <input
-              type="checkbox"
-              name="kabak"
-              value={formInputs.sosis}
-              onChange={changeHandler}
-            />
-            Kabak
-          </label>
+          {toppings.map((topping, i) => {
+            return (
+              <label key={i}>
+                <input
+                  type="checkbox"
+                  name={topping.name}
+                  value={formInputs[topping.name]}
+                  onChange={changeHandler}
+                />
+                {topping.label}
+              </label>
+            );
+          })}
         </div>
 
         <div id="order-note">
