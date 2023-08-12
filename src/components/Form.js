@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
   const toppings = [
@@ -259,7 +260,7 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
             </p>
           </div>
           <button id="order-button" type="submit">
-            Sipariş Ver
+            <Link to="/onay">Sipariş Ver</Link>
           </button>
         </div>
       </div>
