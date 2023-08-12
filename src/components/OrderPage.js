@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import Form from "./Form.js";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const OrderPage = () => {
-  const ordersList = [];
+  const [ordersList, setOrdersList] = useState([]);
 
   const priceOfPizza = 85.5;
   const priceOfTopping = 5;
 
   const addOrders = function (order) {
-    ordersList.push(order);
+    setOrdersList([...ordersList, order]);
   };
 
   return (
