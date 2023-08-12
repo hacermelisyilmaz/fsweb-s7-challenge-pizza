@@ -3,7 +3,7 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const Home = () => {
   return (
-    <div>
+    <div id="Home">
       <h2>KOD ACIKTIRIR</h2>
       <h2>PİZZA, DOYURUR</h2>
       <button id="order-pizza">
