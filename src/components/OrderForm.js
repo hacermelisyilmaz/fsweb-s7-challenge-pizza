@@ -2,8 +2,36 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const OrderForm = () => {
-  const [formInputs, setFormInputs] = useState();
+  const [formInputs, setFormInputs] = useState({
+    size: "",
+    thickness: "",
+    pepperoni: false,
+    sosis: false,
+    jambon: false,
+    tavuk: false,
+    sogan: false,
+    domates: false,
+    misir: false,
+    sucuk: false,
+    jalepeno: false,
+    sarımsak: false,
+    biber: false,
+    ananas: false,
+    kabak: false,
+    note: "",
+    name: "",
+    phone: "",
+    address: "",
+    bill: "",
+  });
   const [counter, setCounter] = useState(1);
+  const [checkedItems, setCheckedItems] = useState(0);
+
+  const changeHandler = (event) => {
+    const { name, value, type, checked } = event.target;
+    const input = type === "checkbox" ? checked : value;
+    setFormInputs({ ...formInputs, [name]: input });
+  };
 
   return (
     <div>
@@ -37,22 +65,42 @@ const OrderForm = () => {
           <div id="pizza-size">
             <h3>Boyut Seç</h3>
             <label>
-              <input type="radio" name="size" value="S" />
+              <input
+                type="radio"
+                name="size"
+                value="S"
+                onChange={changeHandler}
+              />
               Küçük
             </label>
             <label>
-              <input type="radio" name="size" value="M" />
+              <input
+                type="radio"
+                name="size"
+                value="M"
+                onChange={changeHandler}
+              />
               Orta
             </label>
             <label>
-              <input type="radio" name="size" value="L" />
+              <input
+                type="radio"
+                name="size"
+                value="L"
+                onChange={changeHandler}
+              />
               Büyük
             </label>
           </div>
 
           <label id="dough-size">
             <h3>Hamur Seç</h3>
-            <select id="size-dropdown" defaultValue="">
+            <select
+              id="size-dropdown"
+              name="thickness"
+              defaultValue=""
+              onChange={changeHandler}
+            >
               <option disabled value="">
                 Hamur Kalınlığı
               </option>
@@ -65,55 +113,59 @@ const OrderForm = () => {
             <h3>Ek Malzemeler</h3>
             <p>En fazla 10 malzeme seçebilirsiniz. 5₺</p>
             <label>
-              <input type="checkbox" name="pepperoni" />
+              <input
+                type="checkbox"
+                name="pepperoni"
+                onChange={changeHandler}
+              />
               Pepperoni
             </label>
             <label>
-              <input type="checkbox" name="sosis" />
+              <input type="checkbox" name="sosis" onChange={changeHandler} />
               Sosis
             </label>
             <label>
-              <input type="checkbox" name="kanada-jambonu" />
+              <input type="checkbox" name="jambon" onChange={changeHandler} />
               Kanada Jambonu
             </label>
             <label>
-              <input type="checkbox" name="tavuk-izgara" />
+              <input type="checkbox" name="tavuk" onChange={changeHandler} />
               Tavuk Izgara
             </label>
             <label>
-              <input type="checkbox" name="sogan" />
+              <input type="checkbox" name="sogan" onChange={changeHandler} />
               Soğan
             </label>
             <label>
-              <input type="checkbox" name="domates" />
+              <input type="checkbox" name="domates" onChange={changeHandler} />
               Domates
             </label>
             <label>
-              <input type="checkbox" name="mısır" />
+              <input type="checkbox" name="misir" onChange={changeHandler} />
               Mısır
             </label>
             <label>
-              <input type="checkbox" name="sucuk" />
+              <input type="checkbox" name="sucuk" onChange={changeHandler} />
               Sucuk
             </label>
             <label>
-              <input type="checkbox" name="jalepeno" />
+              <input type="checkbox" name="jalepeno" onChange={changeHandler} />
               Jalepeno
             </label>
             <label>
-              <input type="checkbox" name="sarımsak" />
+              <input type="checkbox" name="sarımsak" onChange={changeHandler} />
               Sarımsak
             </label>
             <label>
-              <input type="checkbox" name="biber" />
+              <input type="checkbox" name="biber" onChange={changeHandler} />
               Biber
             </label>
             <label>
-              <input type="checkbox" name="ananas" />
+              <input type="checkbox" name="ananas" onChange={changeHandler} />
               Ananas
             </label>
             <label>
-              <input type="checkbox" name="kabak" />
+              <input type="checkbox" name="kabak" onChange={changeHandler} />
               Kabak
             </label>
           </div>
@@ -122,46 +174,88 @@ const OrderForm = () => {
             <h3>Sipariş Notu</h3>
             <input
               id="special-text"
+              name="note"
               placeholder="Siparişine eklemek istediğin bir not var mı?"
+              onChange={changeHandler}
             />
           </div>
         </div>
+
         <hr />
+
         <div id="customer-info">
           <h2>İletişim Bilgileri</h2>
           <label>
             <h3>Ad Soyad</h3>
-            <input id="name-input" placeholder="Ad Soyad"></input>
+            <input
+              id="name-input"
+              name="name"
+              placeholder="Ad Soyad"
+              onChange={changeHandler}
+            ></input>
           </label>
 
           <label>
             <h3>Telefon</h3>
-            <input id="phone-input" placeholder="(5xx)-xxx-xxxx"></input>
+            <input
+              id="phone-input"
+              name="phone"
+              placeholder="(5xx)-xxx-xxxx"
+              onChange={changeHandler}
+            ></input>
           </label>
 
           <label>
             <h3>Adres</h3>
-            <input id="address-input" placeholder="Adres"></input>
+            <input
+              id="address-input"
+              name="address"
+              placeholder="Adres"
+              onChange={changeHandler}
+            ></input>
           </label>
 
           <div id="bill-type">
             <h3>Fatura Tipi</h3>
             <label>
-              <input type="radio" name="bill" value="home" />
+              <input
+                type="radio"
+                name="bill"
+                value="home"
+                onChange={changeHandler}
+              />
               Bireysel
             </label>
             <label>
-              <input type="radio" name="bill" value="company" />
+              <input
+                type="radio"
+                name="bill"
+                value="company"
+                onChange={changeHandler}
+              />
               Kurumsal
             </label>
           </div>
         </div>
+
         <hr />
-        <div id="order-sum">
-          <div id="number-of-pizza">
+
+        <div id="order-summary">
+          <div id="counter">
             <button className="decrement">-</button>
             {counter}
             <button className="increment">+</button>
+          </div>
+          <div id="total-sum">
+            <h2>Sipariş Toplamı</h2>
+            <div id="topping-price">
+              <p>Seçimler</p>
+              <p>Seçimler</p>
+            </div>
+            <div id="total-price">
+              <p>Toplam</p>
+              <p>Seçimler</p>
+            </div>
           </div>
         </div>
         <button id="order-button">Sipariş Ver</button>
