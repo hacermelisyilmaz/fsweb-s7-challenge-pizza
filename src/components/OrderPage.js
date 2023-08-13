@@ -15,6 +15,7 @@ const OrderPage = () => {
   return (
     <div>
       <header>
+        <img src={require("../images/logo.svg")} alt="logo" />
         <nav>
           <Link>Anasayfa</Link>
           <span>-</span>

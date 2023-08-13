@@ -11,23 +11,24 @@ a:visited {
 #App {
   height: 100vh;
   flex-direction: column;
-  background-image: url("./images/mvp-banner.png");
-  background-size: cover;
-  background-position: bottom center;
   color: #faf7f2;
   font-family: "Quattrocento", serif;
-}
-
-#App img {
-  padding: 0 40vw;
-  padding-top: 9vh;
-  padding-bottom: 5vh;
 }
 
 #Home {
   flex: 1;
   overflow: auto;
   text-align: center;
+  background-image: url("./images/mvp-banner.png");
+  background-size: cover;
+  background-position: bottom center;
+}
+
+#Home img {
+  max-width: 20vw;
+  height: auto;
+  padding-top: 9vh;
+  padding-bottom: 5vh;
 }
 
 h2 {
