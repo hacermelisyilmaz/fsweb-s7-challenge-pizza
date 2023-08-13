@@ -243,26 +243,28 @@ const Form = ({ priceOfPizza, priceOfTopping, addOrders }) => {
           </button>
         </div>
 
-        <div id="total-sum">
-          <h2>Sipariş Toplamı</h2>
-          <div id="topping-price">
-            <p>Seçimler</p>
-            <p>
-              {(counter * checkedItems.length * priceOfTopping).toFixed(2)}₺
-            </p>
-          </div>
-          <div id="total-price">
-            <p>Toplam</p>
-            <p>
-              {(
-                counter *
-                (priceOfPizza + checkedItems.length * priceOfTopping)
-              ).toFixed(2)}
-              ₺
-            </p>
+        <div id="order-sum">
+          <div id="total-sum">
+            <h2>Sipariş Toplamı</h2>
+            <div id="topping-price" className="flex-container">
+              <p>Seçimler</p>
+              <p>
+                {(counter * checkedItems.length * priceOfTopping).toFixed(2)}₺
+              </p>
+            </div>
+            <div id="total-price" className="flex-container">
+              <p>Toplam</p>
+              <p>
+                {(
+                  counter *
+                  (priceOfPizza + checkedItems.length * priceOfTopping)
+                ).toFixed(2)}
+                ₺
+              </p>
+            </div>
           </div>
           <button id="order-button" type="submit">
-            <Link to="/onay">Sipariş Ver</Link>
+            <Link to="/onay">SİPARİŞ VER</Link>
           </button>
         </div>
       </div>

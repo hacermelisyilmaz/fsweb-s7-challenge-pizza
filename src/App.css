@@ -30,9 +30,10 @@ a:visited {
   padding-bottom: 5vh;
 }
 
-#Home h2 {
+h2 {
   font-family: "Barlow", sans-serif;
   font-size: 8vh;
+  color: #faf7f2;
 }
 
 #Home button {
@@ -48,7 +49,6 @@ a:visited {
 
 #Order-Page .header {
   background-color: #ce2829;
-  color: #faf7f2;
 }
 
 #Order-Page header {
@@ -76,6 +76,7 @@ a:visited {
   color: #292929;
   font-size: 1.3rem;
   font-weight: bold;
+  margin: 1rem 0;
 }
 
 #pizza-info {
@@ -110,6 +111,10 @@ a:visited {
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 5vh;
+}
+
+#dough-size {
+  margin-right: 30%;
 }
 
 #pizza-size,
@@ -157,7 +162,7 @@ a:visited {
 }
 
 #order-summary {
-  margin: 1rem 0;
+  margin-top: 2rem;
   justify-content: space-between;
 }
 
@@ -176,11 +181,58 @@ a:visited {
 }
 
 #counter button:first-child {
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
 }
 
 #counter button:last-child {
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+#order-sum {
+  width: 60%;
+}
+
+#total-sum {
+  border: 1px solid #5f5f5f2c;
+  border-radius: 6px;
+  padding: 2rem;
+  line-height: 3rem;
+}
+
+#total-sum div {
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+#total-price {
+  color: #ce2829;
+}
+
+#order-sum button {
+  width: 100%;
+  border: transparent;
+  background-color: #fdc913;
+  padding: 1rem 0;
+  font-weight: 600;
+  color: #292929;
+}
+
+#Confirmed {
+  flex-direction: column;
+  height: 100vh;
+  background-color: #ce2829;
+  text-align: center;
+}
+
+#Confirmed img {
+  height: 5vh;
+  padding-top: 10vh;
+}
+
+#confirm-msg {
+  flex: 1;
+  padding-top: calc(40vh - 70px);
+  padding-bottom: calc(40vh - 70px);
 }
