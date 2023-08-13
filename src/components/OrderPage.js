@@ -14,13 +14,13 @@ const OrderPage = () => {
 
   return (
     <div id="Order-Page">
-      <header>
+      <header className="flex-container">
         <img src={require("../images/logo.svg")} alt="logo" />
         <nav>
           <Link>Anasayfa</Link>
-          <span>-</span>
+          <span> - </span>
           <Link>Seçenekler</Link>
-          <span>-</span>
+          <span> - </span>
           <Link>Sipariş Oluştur</Link>
         </nav>
       </header>
