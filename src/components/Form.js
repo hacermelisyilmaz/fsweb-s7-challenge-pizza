@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
-const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
+const Form = ({ priceOfPizza, priceOfTopping, addOrders }) => {
   const toppings = [
     { name: "pepperoni", label: "Pepperoni" },
     { name: "sosis", label: "Sosis" },
@@ -78,8 +78,8 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
 
   return (
     <form id="pizza-form" onSubmit={submitHandler}>
-      <div id="order-form">
-        <div id="pizza-size">
+      <div id="order-form" className="flex-container">
+        <div id="pizza-size" className="flex-container">
           <h3>Boyut Seç</h3>
           <label>
             <input
@@ -133,25 +133,27 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
           </select>
         </label>
 
-        <div id="topping-checklist">
+        <div id="topping-checklist" className="flex-container">
           <h3>Ek Malzemeler</h3>
           <p>En fazla 10 malzeme seçebilirsiniz. {priceOfTopping}₺</p>
-          {toppings.map((topping, i) => {
-            return (
-              <label key={i}>
-                <input
-                  type="checkbox"
-                  name={topping.name}
-                  onChange={changeHandler}
-                  value={formInputs[topping.name]}
-                  disabled={
-                    checkedItems.length >= 10 && !formInputs[topping.name]
-                  }
-                />
-                {topping.label}
-              </label>
-            );
-          })}
+          <div id="toppings" className="flex-container">
+            {toppings.map((topping, i) => {
+              return (
+                <label key={i}>
+                  <input
+                    type="checkbox"
+                    name={topping.name}
+                    onChange={changeHandler}
+                    value={formInputs[topping.name]}
+                    disabled={
+                      checkedItems.length >= 10 && !formInputs[topping.name]
+                    }
+                  />
+                  {topping.label}
+                </label>
+              );
+            })}
+          </div>
         </div>
 
         <div id="order-note">
@@ -168,8 +170,8 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
 
       <hr />
 
-      <div id="customer-info">
-        <h2>İletişim Bilgileri</h2>
+      <h2>İletişim Bilgileri</h2>
+      <div id="customer-info" className="flex-container">
         <label>
           <h3>Ad Soyad</h3>
           <input
@@ -203,7 +205,7 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
           />
         </label>
 
-        <div id="bill-type">
+        <div id="bill-type" className="flex-container">
           <h3>Fatura Tipi</h3>
           <label>
             <input
@@ -230,12 +232,12 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
 
       <hr />
 
-      <div id="order-summary">
-        <div id="counter">
+      <div id="order-summary" className="flex-container">
+        <div id="counter" className="flex-container">
           <button id="decrement" name="decrement" onClick={clickHandler}>
             -
           </button>
-          {counter}
+          <p>{counter}</p>
           <button id="increment" name="increment" onClick={clickHandler}>
             +
           </button>
@@ -267,4 +269,4 @@ const Home = ({ priceOfPizza, priceOfTopping, addOrders }) => {
     </form>
   );
 };
-export default Home;
+export default Form;

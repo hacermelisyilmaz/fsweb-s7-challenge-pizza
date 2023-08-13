@@ -27,13 +27,13 @@ const OrderPage = () => {
         </header>
       </div>
 
-      <div id="order-page-content">
+      <div id="order-page-content" className="flex-container">
         <h2 id="pizza-name">Position Absolute Acı Pizza</h2>
         <div id="pizza-info" className="flex-container">
           <div id="pizza-price">{priceOfPizza.toFixed(2)}₺</div>
-          <div id="pizza-rating">
-            <p id="pizza-rating-score">4.9</p>
-            <p id="pizza-rating-number">(200)</p>
+          <div id="pizza-rating" className="flex-container">
+            <p>4.9</p>
+            <p>(200)</p>
           </div>
         </div>
         <p>
@@ -41,7 +41,7 @@ const OrderPage = () => {
           pizza tam sana göre. Pizza, domates, peynir ve genellikle ceşitli
           diğer malzemelerle kaplanmiş, daha sonra geleneksel olarak odun
           atesinde bir firinda yüksek sıcaklikta pişirilen. genellikle yuvarlak,
-          düzleştirilmiş mayalı buğday bazlı hamurdan oluşan italyan kökenli
+          düzleştirilmiş mayalı buğday bazlı hamurdan oluşan İtalyan kökenli
           lezzetli bir yemektir. . Küçük bir pizzaya bazen pizzetta denir.
         </p>
 
