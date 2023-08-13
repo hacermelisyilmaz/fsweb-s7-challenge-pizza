@@ -7,7 +7,7 @@ import "./App.css";
 
 const App = () => {
   return (
-    <div id="App">
+    <div id="App" className="flex-container">
       <BrowserRouter>
         <h1>Teknolojik Yemekler</h1>
         <Switch>
