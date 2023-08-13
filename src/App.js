@@ -9,7 +9,7 @@ const App = () => {
   return (
     <div id="App" className="flex-container">
       <BrowserRouter>
-        <h1>Teknolojik Yemekler</h1>
+        <img src={require("./images/logo.svg")} alt="logo" />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route exact path="/pizza" component={OrderPage} />
