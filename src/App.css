@@ -11,8 +11,6 @@ a:visited {
 #App {
   height: 100vh;
   flex-direction: column;
-  color: #faf7f2;
-  font-family: "Quattrocento", serif;
 }
 
 #Home {
@@ -22,6 +20,7 @@ a:visited {
   background-image: url("./images/mvp-banner.png");
   background-size: cover;
   background-position: bottom center;
+  color: #faf7f2;
 }
 
 #Home img {
@@ -31,7 +30,7 @@ a:visited {
   padding-bottom: 5vh;
 }
 
-h2 {
+#Home h2 {
   font-family: "Barlow", sans-serif;
   font-size: 8vh;
 }
@@ -45,4 +44,30 @@ h2 {
   font-weight: bold;
   margin-top: 4vh;
   padding: 1.5vh 3vw;
+}
+
+#Order-Page .header {
+  background-color: #ce2829;
+  color: #faf7f2;
+}
+
+#Order-Page header {
+  height: 15vh;
+  margin: 0 25vw;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.header img {
+  margin: 0 auto;
+  max-width: 20vw;
+}
+
+#order-page-content {
+  margin: 0 25vw;
+  color: #292929;
+}
+
+#order-page-content h2 {
+  font-weight: bold;
 }
