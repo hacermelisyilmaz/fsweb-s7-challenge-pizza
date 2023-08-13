@@ -7,14 +7,16 @@ import "./App.css";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <h1>Teknolojik Yemekler</h1>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/pizza" component={OrderPage} />
-        <Route exact path="/onay" component={Confirmed} />
-      </Switch>
-    </BrowserRouter>
+    <div id="App">
+      <BrowserRouter>
+        <h1>Teknolojik Yemekler</h1>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/pizza" component={OrderPage} />
+          <Route exact path="/onay" component={Confirmed} />
+        </Switch>
+      </BrowserRouter>
+    </div>
   );
 };
 export default App;
