@@ -171,9 +171,7 @@ const OrderForm = ({ priceOfPizza, priceOfTopping, addOrders }) => {
         </FormGroup>
 
         <FormGroup id="dough-size">
-          <Label>
-            <h3>Hamur Seç</h3>
-          </Label>
+          <h3>Hamur Seç</h3>
 
           <select
             id="size-dropdown"
@@ -236,7 +234,7 @@ const OrderForm = ({ priceOfPizza, priceOfTopping, addOrders }) => {
       <hr />
 
       <h2>İletişim Bilgileri</h2>
-      <div id="customer-info" className="flex-container">
+      <FormGroup id="customer-info" className="flex-container">
         <Label>
           <h3>Ad Soyad</h3>
           <Input
@@ -274,7 +272,7 @@ const OrderForm = ({ priceOfPizza, priceOfTopping, addOrders }) => {
           />
           <FormFeedback>{errors.address}</FormFeedback>
         </Label>
-      </div>
+      </FormGroup>
 
       <hr />
 
