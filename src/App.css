@@ -52,6 +52,7 @@ h2 {
 }
 
 #Order-Page header {
+  color: #faf7f2;
   height: 15vh;
   margin: 0 auto;
   max-width: 590px;
@@ -228,7 +229,7 @@ h2 {
 
 #Confirmed img {
   height: 5vh;
-  padding-top: 10vh;
+  margin-top: 7vh;
 }
 
 #confirm-msg {

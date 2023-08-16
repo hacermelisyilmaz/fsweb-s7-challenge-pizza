@@ -1,7 +1,17 @@
+import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import {
+  Form,
+  FormGroup,
+  Input,
+  Label,
+  FormFeedback,
+  Button,
+} from "reactstrap";
+import { Link } from "react-router-dom";
+import * as Yup from "yup";
 
-const Form = ({ priceOfPizza, priceOfTopping, addOrders }) => {
+const OrderForm = ({ priceOfPizza, priceOfTopping, addOrders }) => {
   const toppings = [
     { name: "pepperoni", label: "Pepperoni" },
     { name: "sosis", label: "Sosis" },
@@ -37,18 +47,61 @@ const Form = ({ priceOfPizza, priceOfTopping, addOrders }) => {
     name: "",
     phone: "",
     address: "",
-    bill: "",
   };
 
   const [formInputs, setFormInputs] = useState(emptyForm);
   const [counter, setCounter] = useState(1);
   const [checkedItems, setCheckedItems] = useState([]);
+  const [isFormValid, setFormValid] = useState(false);
+  const [errors, setErrors] = useState({
+    size: "",
+    thickness: "",
+    checkCount: "",
+    note: "",
+    name: "",
+    phone: "",
+    address: "",
+  });
+
+  const formSchema = Yup.object().shape({
+    size: Yup.string().required("Pizzanızın boyutunu seçiniz."),
+    thickness: Yup.string().required("Hamur kalınlığı seçiniz."),
+    note: Yup.string().max(50, "En fazla 50 karakter girebilirsiniz."),
+    name: Yup.string()
+      .required("İsminizi giriniz.")
+      .min(2, "İsim en az iki karakter olmalıdır."),
+    phone: Yup.string()
+      .required("Telefon numaranızı giriniz.")
+      .matches(/^5/, "Telefon numaranızı 5 ile başlayacak şekilde girin.")
+      .length(10, "Telefon numaranız 10 karakter olmalı."),
+    address: Yup.string().required("Teslimat adresini giriniz."),
+    ...toppings.reduce((acc, topping) => {
+      acc[topping.name] = Yup.boolean();
+      return acc;
+    }, {}),
+  });
+
+  const validateFormField = (event) => {
+    const { name, value, type, checked } = event.target;
+    const input = type === "checkbox" ? checked : value;
+
+    Yup.reach(formSchema, name)
+      .validate(input)
+      .then((valid) => {
+        setErrors({ ...errors, [name]: "" });
+      })
+      .catch((error) => {
+        setErrors({ ...errors, [name]: error.errors[0] });
+      });
+  };
 
   const changeHandler = (event) => {
     const { name, value, type, checked } = event.target;
-    if (type === "checkbox") {
-      setFormInputs({ ...formInputs, [name]: checked });
-    } else setFormInputs({ ...formInputs, [name]: value });
+    validateFormField(event);
+    setFormInputs({
+      ...formInputs,
+      [name]: type === "checkbox" ? checked : value,
+    });
   };
 
   const submitHandler = (event) => {
@@ -74,15 +127,19 @@ const Form = ({ priceOfPizza, priceOfTopping, addOrders }) => {
       formInputs[name] === true && selectedToppings.push(name);
     }
     setCheckedItems(selectedToppings);
+    formSchema.isValid(formInputs).then((valid) => {
+      setFormValid(valid);
+    });
   }, [formInputs]);
 
   return (
-    <form id="pizza-form" onSubmit={submitHandler}>
+    <Form id="pizza-form" onSubmit={submitHandler}>
       <div id="order-form" className="flex-container">
-        <div id="pizza-size" className="flex-container">
+        <FormGroup id="pizza-size" className="flex-container">
           <h3>Boyut Seç</h3>
-          <label>
-            <input
+          <FormFeedback>{errors.size}</FormFeedback>
+          <Label>
+            <Input
               type="radio"
               name="size"
               value="S"
@@ -90,9 +147,9 @@ const Form = ({ priceOfPizza, priceOfTopping, addOrders }) => {
               checked={formInputs.size === "S"}
             />
             Küçük
-          </label>
-          <label>
-            <input
+          </Label>
+          <Label>
+            <Input
               type="radio"
               name="size"
               value="M"
@@ -100,9 +157,9 @@ const Form = ({ priceOfPizza, priceOfTopping, addOrders }) => {
               checked={formInputs.size === "M"}
             />
             Orta
-          </label>
-          <label>
-            <input
+          </Label>
+          <Label>
+            <Input
               type="radio"
               name="size"
               value="L"
@@ -110,11 +167,14 @@ const Form = ({ priceOfPizza, priceOfTopping, addOrders }) => {
               checked={formInputs.size === "L"}
             />
             Büyük
-          </label>
-        </div>
+          </Label>
+        </FormGroup>
 
-        <label id="dough-size">
-          <h3>Hamur Seç</h3>
+        <FormGroup id="dough-size">
+          <Label>
+            <h3>Hamur Seç</h3>
+          </Label>
+
           <select
             id="size-dropdown"
             name="thickness"
@@ -131,16 +191,17 @@ const Form = ({ priceOfPizza, priceOfTopping, addOrders }) => {
               Kalın
             </option>
           </select>
-        </label>
+          <FormFeedback>{errors.thickness}</FormFeedback>
+        </FormGroup>
 
-        <div id="topping-checklist" className="flex-container">
+        <FormGroup id="topping-checklist" className="flex-container">
           <h3>Ek Malzemeler</h3>
           <p>En fazla 10 malzeme seçebilirsiniz. {priceOfTopping}₺</p>
           <div id="toppings" className="flex-container">
             {toppings.map((topping, i) => {
               return (
-                <label key={i}>
-                  <input
+                <Label key={i}>
+                  <Input
                     type="checkbox"
                     name={topping.name}
                     onChange={changeHandler}
@@ -150,21 +211,25 @@ const Form = ({ priceOfPizza, priceOfTopping, addOrders }) => {
                     }
                   />
                   {topping.label}
-                </label>
+                </Label>
               );
             })}
           </div>
-        </div>
+          <FormFeedback>{errors.checkCount}</FormFeedback>
+        </FormGroup>
 
         <div id="order-note">
           <h3>Sipariş Notu</h3>
-          <input
+
+          <Input
             id="special-text"
             name="note"
             placeholder="Siparişine eklemek istediğin bir not var mı?"
             onChange={changeHandler}
             value={formInputs.note}
+            invalid={!!errors.note}
           />
+          <FormFeedback>{errors.note}</FormFeedback>
         </div>
       </div>
 
@@ -172,75 +237,56 @@ const Form = ({ priceOfPizza, priceOfTopping, addOrders }) => {
 
       <h2>İletişim Bilgileri</h2>
       <div id="customer-info" className="flex-container">
-        <label>
+        <Label>
           <h3>Ad Soyad</h3>
-          <input
-            id="name-input"
+          <Input
+            id="name-Input"
             name="name"
             placeholder="Ad Soyad"
             onChange={changeHandler}
             value={formInputs.name}
+            invalid={!!errors.name}
           />
-        </label>
+          <FormFeedback>{errors.name}</FormFeedback>
+        </Label>
 
-        <label>
+        <Label>
           <h3>Telefon</h3>
-          <input
-            id="phone-input"
+          <Input
+            id="phone-Input"
             name="phone"
             placeholder="5xxxxxxxxx"
             onChange={changeHandler}
             value={formInputs.phone}
+            invalid={!!errors.phone}
           />
-        </label>
+          <FormFeedback>{errors.phone}</FormFeedback>
+        </Label>
 
-        <label>
+        <Label>
           <h3>Adres</h3>
-          <input
-            id="address-input"
+          <Input
+            id="address-Input"
             name="address"
             placeholder="Adres"
             onChange={changeHandler}
             value={formInputs.address}
           />
-        </label>
-
-        <div id="bill-type" className="flex-container">
-          <h3>Fatura Tipi</h3>
-          <label>
-            <input
-              type="radio"
-              name="bill"
-              value="home"
-              onChange={changeHandler}
-              checked={formInputs.bill}
-            />
-            Bireysel
-          </label>
-          <label>
-            <input
-              type="radio"
-              name="bill"
-              value="company"
-              onChange={changeHandler}
-              checked={formInputs.name}
-            />
-            Kurumsal
-          </label>
-        </div>
+          <FormFeedback>{errors.address}</FormFeedback>
+        </Label>
       </div>
 
       <hr />
 
       <div id="order-summary" className="flex-container">
         <div id="counter" className="flex-container">
-          <button id="decrement" name="decrement" onClick={clickHandler}>
+          <Button id="decrement" name="decrement" onClick={clickHandler}>
             -
-          </button>
+          </Button>
           <p>{counter}</p>
-          <button id="increment" name="increment" onClick={clickHandler}>
+          <Button id="increment" name="increment" onClick={clickHandler}>
             +
-          </button>
+          </Button>
         </div>
 
         <div id="order-sum">
@@ -263,12 +309,14 @@ const Form = ({ priceOfPizza, priceOfTopping, addOrders }) => {
               </p>
             </div>
           </div>
-          <button id="order-button" type="submit">
-            <Link to="/onay">SİPARİŞ VER</Link>
-          </button>
+          <Link to={isFormValid ? "/onay" : "#"}>
+            <Button id="order-button" type="submit" disabled={!isFormValid}>
+              SİPARİŞ VER
+            </Button>
+          </Link>
         </div>
       </div>
-    </form>
+    </Form>
   );
 };
-export default Form;
+export default OrderForm;

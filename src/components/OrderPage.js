@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Form from "./Form.js";
+import OrderForm from "./OrderForm.js";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const OrderPage = () => {
@@ -18,11 +18,11 @@ const OrderPage = () => {
         <header className="flex-container">
           <img src={require("../images/logo.svg")} alt="logo" />
           <nav>
-            <Link>Anasayfa</Link>
+            <Link to="/">Anasayfa</Link>
             <span> - </span>
             <Link>Seçenekler</Link>
             <span> - </span>
-            <Link>Sipariş Oluştur</Link>
+            <Link to="/pizza">Sipariş Oluştur</Link>
           </nav>
         </header>
       </div>
@@ -45,7 +45,7 @@ const OrderPage = () => {
           lezzetli bir yemektir. . Küçük bir pizzaya bazen pizzetta denir.
         </p>
 
-        <Form
+        <OrderForm
           priceOfPizza={priceOfPizza}
           priceOfTopping={priceOfTopping}
           addOrders={addOrders}
