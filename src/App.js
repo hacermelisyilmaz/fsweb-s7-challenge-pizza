@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Home from "./components/Home.js";
-import OrderPage from "./components/OrderPage.js";
-import Confirmed from "./components/Confirmed.js";
+import Home from "./pages/Home.js";
+import OrderPage from "./pages/OrderPage.js";
+import Confirmed from "./pages/Confirmed.js";
 import "./App.css";
 
 const App = () => {

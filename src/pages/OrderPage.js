@@ -1,15 +1,54 @@
 import React, { useState } from "react";
-import OrderForm from "./OrderForm.js";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import OrderForm from "../components/OrderForm.js";
+import { Link } from "react-router-dom";
 
 const OrderPage = () => {
   const [ordersList, setOrdersList] = useState([]);
+
+  const toppings = [
+    { name: "pepperoni", label: "Pepperoni" },
+    { name: "sosis", label: "Sosis" },
+    { name: "jambon", label: "Kanada Jambonu" },
+    { name: "tavuk", label: "Tavuk Izgara" },
+    { name: "sogan", label: "Soğan" },
+    { name: "domates", label: "Domates" },
+    { name: "misir", label: "Mısır" },
+    { name: "sucuk", label: "Sucuk" },
+    { name: "jalepeno", label: "Jalepeno" },
+    { name: "sarimsak", label: "Sarımsak" },
+    { name: "biber", label: "Biber" },
+    { name: "ananas", label: "Ananas" },
+    { name: "kabak", label: "Kabak" },
+  ];
+  const emptyForm = {
+    size: "",
+    thickness: "",
+    pepperoni: false,
+    sosis: false,
+    jambon: false,
+    tavuk: false,
+    sogan: false,
+    domates: false,
+    misir: false,
+    sucuk: false,
+    jalepeno: false,
+    sarimsak: false,
+    biber: false,
+    ananas: false,
+    kabak: false,
+    note: "",
+    name: "",
+    phone: "",
+    address: "",
+    amount: 1,
+  };
 
   const priceOfPizza = 85.5;
   const priceOfTopping = 5;
 
   const addOrders = function (order) {
     setOrdersList([...ordersList, order]);
+    console.log(ordersList);
   };
 
   return (
@@ -46,6 +85,8 @@ const OrderPage = () => {
         </p>
 
         <OrderForm
+          toppings={toppings}
+          emptyForm={emptyForm}
           priceOfPizza={priceOfPizza}
           priceOfTopping={priceOfTopping}
           addOrders={addOrders}

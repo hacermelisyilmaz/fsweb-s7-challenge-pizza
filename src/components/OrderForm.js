@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import {
   Form,
@@ -7,51 +8,29 @@ import {
   Label,
   FormFeedback,
   Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from "reactstrap";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 
-const OrderForm = ({ priceOfPizza, priceOfTopping, addOrders }) => {
-  const toppings = [
-    { name: "pepperoni", label: "Pepperoni" },
-    { name: "sosis", label: "Sosis" },
-    { name: "jambon", label: "Kanada Jambonu" },
-    { name: "tavuk", label: "Tavuk Izgara" },
-    { name: "sogan", label: "Soğan" },
-    { name: "domates", label: "Domates" },
-    { name: "misir", label: "Mısır" },
-    { name: "sucuk", label: "Sucuk" },
-    { name: "jalepeno", label: "Jalepeno" },
-    { name: "sarimsak", label: "Sarımsak" },
-    { name: "biber", label: "Biber" },
-    { name: "ananas", label: "Ananas" },
-    { name: "kabak", label: "Kabak" },
-  ];
-  const emptyForm = {
-    size: "",
-    thickness: "",
-    pepperoni: false,
-    sosis: false,
-    jambon: false,
-    tavuk: false,
-    sogan: false,
-    domates: false,
-    misir: false,
-    sucuk: false,
-    jalepeno: false,
-    sarimsak: false,
-    biber: false,
-    ananas: false,
-    kabak: false,
-    note: "",
-    name: "",
-    phone: "",
-    address: "",
-  };
+const OrderForm = ({
+  toppings,
+  emptyForm,
+  priceOfPizza,
+  priceOfTopping,
+  addOrders,
+}) => {
+  const history = useHistory();
 
+  const [modal, setModal] = useState(false);
   const [formInputs, setFormInputs] = useState(emptyForm);
   const [counter, setCounter] = useState(1);
   const [checkedItems, setCheckedItems] = useState([]);
+  const [toppingsPrice, setToppingsPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
   const [isFormValid, setFormValid] = useState(false);
   const [errors, setErrors] = useState({
     size: "",
@@ -69,7 +48,7 @@ const OrderForm = ({ priceOfPizza, priceOfTopping, addOrders }) => {
     note: Yup.string().max(50, "En fazla 50 karakter girebilirsiniz."),
     name: Yup.string()
       .required("İsminizi giriniz.")
-      .min(2, "İsim en az iki karakter olmalıdır."),
+      .min(2, "İsim en az 2 karakter olmalıdır"),
     phone: Yup.string()
       .required("Telefon numaranızı giriniz.")
       .matches(/^5/, "Telefon numaranızı 5 ile başlayacak şekilde girin.")
@@ -95,6 +74,8 @@ const OrderForm = ({ priceOfPizza, priceOfTopping, addOrders }) => {
       });
   };
 
+  const toggle = () => setModal(!modal);
+
   const changeHandler = (event) => {
     const { name, value, type, checked } = event.target;
     validateFormField(event);
@@ -106,10 +87,19 @@ const OrderForm = ({ priceOfPizza, priceOfTopping, addOrders }) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    addOrders(formInputs);
-    setFormInputs(emptyForm);
-    setCounter(1);
-    setCheckedItems([]);
+    axios
+      .post("https://reqres.in/api/users", formInputs)
+      .then(function (response) {
+        addOrders(formInputs);
+        history.push("/onay");
+        setFormInputs(emptyForm);
+        setCounter(1);
+        setCheckedItems([]);
+      })
+      .catch(function (error) {
+        console.error(error);
+        setModal(true);
+      });
   };
 
   const clickHandler = (event) => {
@@ -132,6 +122,18 @@ const OrderForm = ({ priceOfPizza, priceOfTopping, addOrders }) => {
     });
   }, [formInputs]);
 
+  useEffect(() => {
+    setFormInputs({ ...formInputs, amount: counter });
+  }, [counter]);
+
+  useEffect(() => {
+    setToppingsPrice(counter * checkedItems.length * priceOfTopping);
+    setTotalPrice(
+      counter * (priceOfPizza + checkedItems.length * priceOfTopping)
+    );
+  }, [counter, checkedItems]);
+
+  console.log(formInputs);
   return (
     <Form id="pizza-form" onSubmit={submitHandler}>
       <div id="order-form" className="flex-container">
@@ -238,7 +240,7 @@ const OrderForm = ({ priceOfPizza, priceOfTopping, addOrders }) => {
         <Label>
           <h3>Ad Soyad</h3>
           <Input
-            id="name-Input"
+            id="name-input"
             name="name"
             placeholder="Ad Soyad"
             onChange={changeHandler}
@@ -292,28 +294,32 @@ const OrderForm = ({ priceOfPizza, priceOfTopping, addOrders }) => {
             <h2>Sipariş Toplamı</h2>
             <div id="topping-price" className="flex-container">
               <p>Seçimler</p>
-              <p>
-                {(counter * checkedItems.length * priceOfTopping).toFixed(2)}₺
-              </p>
+              <p>{toppingsPrice.toFixed(2)}₺</p>
             </div>
             <div id="total-price" className="flex-container">
               <p>Toplam</p>
-              <p>
-                {(
-                  counter *
-                  (priceOfPizza + checkedItems.length * priceOfTopping)
-                ).toFixed(2)}
-                ₺
-              </p>
+              <p>{totalPrice.toFixed(2)}₺</p>
             </div>
           </div>
-          <Link to={isFormValid ? "/onay" : "#"}>
-            <Button id="order-button" type="submit" disabled={!isFormValid}>
-              SİPARİŞ VER
-            </Button>
-          </Link>
+          <Button id="order-button" type="submit" disabled={!isFormValid}>
+            SİPARİŞ VER
+          </Button>
         </div>
       </div>
+
+      {
+        <Modal isOpen={modal} toggle={toggle}>
+          <ModalHeader toggle={toggle}>Hata</ModalHeader>
+          <ModalBody>
+            Form gönderilirken bir hata oluştu. Lütfen tekrar deneyin.
+          </ModalBody>
+          <ModalFooter>
+            <Button color="danger" onClick={toggle}>
+              Kapat
+            </Button>
+          </ModalFooter>
+        </Modal>
+      }
     </Form>
   );
 };
