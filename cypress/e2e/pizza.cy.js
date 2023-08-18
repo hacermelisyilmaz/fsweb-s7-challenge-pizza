@@ -46,11 +46,12 @@ describe("Checkbox Inputs", () => {
 });
 
 describe("Form Submission", () => {
-  beforeEach(() => {
-    cy.visit("/pizza");
-  });
+  it("anasayfadan başlayıp form dolduruluyor ve onay sayfasına gidiyor", () => {
+    cy.visit("/");
 
-  it("Form gönderilebiliyor", () => {
+    cy.get("[data-cy=order-pizza]").click();
+    cy.url().should("include", "/pizza");
+
     cy.get("input[data-cy=size-input][value=M]").check();
     cy.get("[data-cy=thickness-input]").select("thin");
     cy.get("[data-cy=name-input]").type("Melis Yilmaz");
@@ -58,5 +59,8 @@ describe("Form Submission", () => {
     cy.get("[data-cy=address-input]").type("Ev adresim");
 
     cy.get("[data-cy=order-button]").should("not.be.disabled");
+
+    cy.get("[data-cy=order-button]").click();
+    cy.url().should("include", "/onay");
   });
 });

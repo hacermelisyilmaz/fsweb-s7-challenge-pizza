@@ -8,13 +8,10 @@ a:visited {
   display: flex;
 }
 
-#App {
-  height: 100vh;
-  flex-direction: column;
-}
-
-#Home {
+#home-header {
   flex: 1;
+  height: 100vh;
+  width: 100vw;
   overflow: auto;
   text-align: center;
   background-image: url("./images/mvp-banner.png");
@@ -23,11 +20,17 @@ a:visited {
   color: #faf7f2;
 }
 
-#Home img {
-  max-width: 20vw;
-  height: auto;
-  padding-top: 9vh;
+#home-header img {
+  height: 5.5rem;
+  padding-top: 6vh;
   padding-bottom: 5vh;
+}
+
+#home-header p {
+  font-family: "Satisfy", sans-serif;
+  font-size: 1.5rem;
+  color: #fdc913;
+  margin: 0;
 }
 
 h2 {
@@ -36,7 +39,7 @@ h2 {
   color: #faf7f2;
 }
 
-#Home button {
+#home-header button {
   background-color: #fdc913;
   border: 1px solid #fdc913;
   border-radius: 15px;
@@ -45,6 +48,10 @@ h2 {
   font-weight: bold;
   margin-top: 4vh;
   padding: 1.5vh 3vw;
+}
+
+#Order-Page {
+  width: 100%;
 }
 
 #Order-Page .header {
@@ -233,6 +240,7 @@ h2 {
 }
 
 #Confirmed {
+  width: 100%;
   flex-direction: column;
   height: 100vh;
   background-color: #ce2829;
