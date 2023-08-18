@@ -5,6 +5,11 @@ import { Link } from "react-router-dom";
 const OrderPage = () => {
   const [ordersList, setOrdersList] = useState([]);
 
+  const sizes = [
+    { name: "S", label: "Küçük" },
+    { name: "M", label: "Orta" },
+    { name: "L", label: "Büyük" },
+  ];
   const toppings = [
     { name: "pepperoni", label: "Pepperoni" },
     { name: "sosis", label: "Sosis" },
@@ -85,6 +90,7 @@ const OrderPage = () => {
         </p>
 
         <OrderForm
+          sizes={sizes}
           toppings={toppings}
           emptyForm={emptyForm}
           priceOfPizza={priceOfPizza}

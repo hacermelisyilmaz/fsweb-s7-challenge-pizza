@@ -17,6 +17,7 @@ import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 
 const OrderForm = ({
+  sizes,
   toppings,
   emptyForm,
   priceOfPizza,
@@ -139,47 +140,31 @@ const OrderForm = ({
       <div id="order-form" className="flex-container">
         <FormGroup id="pizza-size" className="flex-container">
           <h3>Boyut Seç</h3>
-          <FormFeedback>{errors.size}</FormFeedback>
-          <Label>
-            <Input
-              type="radio"
-              name="size"
-              value="S"
-              onChange={changeHandler}
-              checked={formInputs.size === "S"}
-            />
-            Küçük
-          </Label>
-          <Label>
-            <Input
-              type="radio"
-              name="size"
-              value="M"
-              onChange={changeHandler}
-              checked={formInputs.size === "M"}
-            />
-            Orta
-          </Label>
-          <Label>
-            <Input
-              type="radio"
-              name="size"
-              value="L"
-              onChange={changeHandler}
-              checked={formInputs.size === "L"}
-            />
-            Büyük
-          </Label>
+          {sizes.map((size, i) => {
+            return (
+              <Label key={i}>
+                <Input
+                  type="radio"
+                  name="size"
+                  value={size.name}
+                  onChange={changeHandler}
+                  checked={formInputs.size === size.name}
+                  data-cy="size-input"
+                />
+                {size.label}
+              </Label>
+            );
+          })}
         </FormGroup>
 
-        <FormGroup id="dough-size">
+        <FormGroup id="dough-thickness">
           <h3>Hamur Seç</h3>
-
           <select
-            id="size-dropdown"
+            id="thickness-dropdown"
             name="thickness"
             defaultValue=""
             onChange={changeHandler}
+            data-cy="thickness-input"
           >
             <option disabled value="">
               Hamur Kalınlığı
@@ -191,7 +176,6 @@ const OrderForm = ({
               Kalın
             </option>
           </select>
-          <FormFeedback>{errors.thickness}</FormFeedback>
         </FormGroup>
 
         <FormGroup id="topping-checklist" className="flex-container">
@@ -209,6 +193,7 @@ const OrderForm = ({
                     disabled={
                       checkedItems.length >= 10 && !formInputs[topping.name]
                     }
+                    data-cy={`${topping.name}-input`}
                   />
                   {topping.label}
                 </Label>
@@ -220,7 +205,6 @@ const OrderForm = ({
 
         <div id="order-note">
           <h3>Sipariş Notu</h3>
-
           <Input
             id="special-text"
             name="note"
@@ -228,6 +212,7 @@ const OrderForm = ({
             onChange={changeHandler}
             value={formInputs.note}
             invalid={!!errors.note}
+            data-cy="note-input"
           />
           <FormFeedback>{errors.note}</FormFeedback>
         </div>
@@ -246,6 +231,7 @@ const OrderForm = ({
             onChange={changeHandler}
             value={formInputs.name}
             invalid={!!errors.name}
+            data-cy="name-input"
           />
           <FormFeedback>{errors.name}</FormFeedback>
         </Label>
@@ -259,6 +245,7 @@ const OrderForm = ({
             onChange={changeHandler}
             value={formInputs.phone}
             invalid={!!errors.phone}
+            data-cy="phone-input"
           />
           <FormFeedback>{errors.phone}</FormFeedback>
         </Label>
@@ -271,6 +258,8 @@ const OrderForm = ({
             placeholder="Adres"
             onChange={changeHandler}
             value={formInputs.address}
+            invalid={!!errors.address}
+            data-cy="address-input"
           />
           <FormFeedback>{errors.address}</FormFeedback>
         </Label>
@@ -301,25 +290,28 @@ const OrderForm = ({
               <p>{totalPrice.toFixed(2)}₺</p>
             </div>
           </div>
-          <Button id="order-button" type="submit" disabled={!isFormValid}>
+          <Button
+            id="order-button"
+            type="submit"
+            disabled={!isFormValid}
+            data-cy="order-button"
+          >
             SİPARİŞ VER
           </Button>
         </div>
       </div>
 
-      {
-        <Modal isOpen={modal} toggle={toggle}>
-          <ModalHeader toggle={toggle}>Hata</ModalHeader>
-          <ModalBody>
-            Form gönderilirken bir hata oluştu. Lütfen tekrar deneyin.
-          </ModalBody>
-          <ModalFooter>
-            <Button color="danger" onClick={toggle}>
-              Kapat
-            </Button>
-          </ModalFooter>
-        </Modal>
-      }
+      <Modal isOpen={modal} toggle={toggle}>
+        <ModalHeader toggle={toggle}>Hata</ModalHeader>
+        <ModalBody>
+          Form gönderilirken bir hata oluştu. Lütfen tekrar deneyin.
+        </ModalBody>
+        <ModalFooter>
+          <Button color="danger" onClick={toggle}>
+            Kapat
+          </Button>
+        </ModalFooter>
+      </Modal>
     </Form>
   );
 };
