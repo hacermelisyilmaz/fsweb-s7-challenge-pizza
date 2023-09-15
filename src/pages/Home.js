@@ -1,17 +1,14 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Button, NavLink } from "reactstrap";
-import { Link } from "react-router-dom";
+import { Button } from "reactstrap";
+import { useHistory } from "react-router-dom";
 
 const Home = () => {
-  const tabs = [
-    { name: "kore", label: "YENİ! Kore" },
-    { name: "pizza", label: "Pizza" },
-    { name: "burger", label: "Burger" },
-    { name: "fries", label: "Kızartmalar" },
-    { name: "fastfood", label: "Fast Food" },
-    { name: "softdrinks", label: "Gazlı İçecek" },
-  ];
+  const history = useHistory();
+
+  const openFormPage = function () {
+    history.push("/pizza");
+  };
 
   return (
     <div id="Home">
@@ -20,11 +17,9 @@ const Home = () => {
         <p>fırsatı kaçırma</p>
         <h2>KOD ACIKTIRIR</h2>
         <h2>PİZZA, DOYURUR</h2>
-        <Link to="/pizza">
-          <Button id="order-pizza" data-cy="order-pizza">
-            ACIKTIM
-          </Button>
-        </Link>
+        <Button id="order-pizza" onClick={openFormPage} data-cy="order-pizza">
+          ACIKTIM
+        </Button>
       </header>
     </div>
   );

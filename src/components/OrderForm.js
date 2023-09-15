@@ -84,6 +84,12 @@ const OrderForm = ({
       ...formInputs,
       [name]: type === "checkbox" ? checked : value,
     });
+
+    const selectedToppings = [];
+    for (let name in formInputs) {
+      formInputs[name] === true && selectedToppings.push(name);
+    }
+    setCheckedItems(selectedToppings);
   };
 
   const submitHandler = (event) => {
@@ -113,11 +119,6 @@ const OrderForm = ({
   };
 
   useEffect(() => {
-    const selectedToppings = [];
-    for (let name in formInputs) {
-      formInputs[name] === true && selectedToppings.push(name);
-    }
-    setCheckedItems(selectedToppings);
     formSchema.isValid(formInputs).then((valid) => {
       setFormValid(valid);
     });
